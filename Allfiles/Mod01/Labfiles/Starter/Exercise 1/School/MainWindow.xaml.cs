@@ -58,18 +58,62 @@ namespace School
         private void studentsList_KeyDown(object sender, KeyEventArgs e)
         {
             // TODO: Exercise 1: Task 1a: If the user pressed Enter, edit the details for the currently selected student
-            // TODO: Exercise 1: Task 2a: Use the StudentsForm to display and edit the details of the student
-            // TODO: Exercise 1: Task 2b: Set the title of the form and populate the fields on the form with the details of the student
-            // TODO: Exercise 1: Task 3a: Display the form
-            // TODO: Exercise 1: Task 3b: When the user closes the form, copy the details back to the student
-            // TODO: Exercise 1: Task 3c: Enable saving (changes are not made permanent until they are written back to the database)
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    var student = (sender as ListView).SelectedValue as Student;
+
+                    // TODO: Exercise 1: Task 2a: Use the StudentsForm to display and edit the details of the student
+                    var sf = new StudentForm();
+
+                    // TODO: Exercise 1: Task 2b: Set the title of the form and populate the fields on the form with the details of the student
+                    sf.Title = "Edit student details";
+                    sf.firstName.Text = student.FirstName;
+                    sf.lastName.Text = student.LastName;
+                    sf.dateOfBirth.Text = student.DateOfBirth.ToString("d");
+
+                    // TODO: Exercise 1: Task 3a: Display the form
+                    sf.Owner = this;
+                    sf.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    if (sf.ShowDialog().Value)
+                    {
+                        // TODO: Exercise 1: Task 3b: When the user closes the form, copy the details back to the student
+                        student.FirstName = sf.firstName.Text;
+                        student.LastName = sf.lastName.Text;
+                        student.DateOfBirth = DateTime.ParseExact(sf.dateOfBirth.Text,"dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                        // TODO: Exercise 1: Task 3c: Enable saving (changes are not made permanent until they are written back to the database)
+                        saveChanges.IsEnabled = true;
+                    }
+                    break;
+
+                case Key.Insert:
+                    var newStudent = (sender as ListView).SelectedValue as Student;
+
+                    var sf2 = new StudentForm();
+                    sf2.Title = "Insert student in " + teacher.Class;
+                    sf2.Owner = this;
+                    sf2.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                    if (sf2.ShowDialog().Value)
+                    {
+                        // TODO: Exercise 1: Task 3b: When the user closes the form, copy the details back to the student
+                        newStudent.FirstName = sf2.firstName.Text;
+                        newStudent.LastName = sf2.lastName.Text;
+                        newStudent.DateOfBirth = DateTime.ParseExact(sf2.dateOfBirth.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                        // TODO: Exercise 1: Task 3c: Enable saving (changes are not made permanent until they are written back to the database)
+                        saveChanges.IsEnabled = true;
+                    }
+                    break;
+            }
+
         }
 
         #region Predefined code
 
         private void studentsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
- 
+
         }
 
         // Save changes back to the database and make them permanent
