@@ -59,5 +59,32 @@ namespace School.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar acción.
+        /// </summary>
+        internal static string ConfirmarAccion {
+            get {
+                return ResourceManager.GetString("ConfirmarAccion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar {0}.
+        /// </summary>
+        internal static string EliminarEstudiante {
+            get {
+                return ResourceManager.GetString("EliminarEstudiante", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar Estudiante.
+        /// </summary>
+        internal static string TituloEditarEstudiante {
+            get {
+                return ResourceManager.GetString("TituloEditarEstudiante", resourceCulture);
+            }
+        }
     }
 }
