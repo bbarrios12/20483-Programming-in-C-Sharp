@@ -190,16 +190,16 @@ namespace School
                 // Disable the Save button (it will be enabled if the user makes more changes)
                 saveChanges.IsEnabled = false;
             }
-            catch (OptimisticConcurrencyException)
-            {
-                this.schoolContext.Refresh(RefreshMode.ClientWins, schoolContext.Students);
-                this.schoolContext.SaveChanges();
-                throw;
-            }
+            //catch (OptimisticConcurrencyException)
+            //{
+            //    this.schoolContext.Refresh(RefreshMode.StoreWins, schoolContext.Students);
+            //    this.schoolContext.SaveChanges();
+            //}
             catch(UpdateException uEx)
             {
-                MessageBox.Show(uEx.InnerException.Message, "Error al guardar la información");
+                MessageBox.Show(uEx.Message, "Error al guardar la información");
                 this.schoolContext.Refresh(RefreshMode.StoreWins, schoolContext.Students);
+                teachersList_SelectionChanged(null, null);
             }
             catch (Exception ex)
             {
