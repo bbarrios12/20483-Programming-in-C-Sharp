@@ -23,10 +23,10 @@
 
             <StackPanel x:Name="studentName" Grid.Row="1" Margin="30" Height="250" Width="235" >
                 <!-- TODO: Exercise 3: Task 4b: Bind the firstName TextBlock to the FirstName property of the DataContext for this control-->
-                <TextBlock x:Name="firstName" FontSize="16" />
+                <TextBlock x:Name="firstName" FontSize="16" Text="{Binding FirstName}" />
                 
                 <!-- TODO: Exercise 3: Task 4c: Bind the lastName TextBlock to the LastName property of the DataContext for this control-->
-                <TextBlock x:Name="lastName" FontSize="16"  />
+                <TextBlock x:Name="lastName" FontSize="16" Text="{Binding LastName}"  />
             </StackPanel>
         </Grid> 
         

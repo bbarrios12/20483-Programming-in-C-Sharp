@@ -39,7 +39,7 @@ namespace GradesPrototype
             studentProfile.Visibility = Visibility.Collapsed;
         }
 
-        // TODO: Exercise 1: Task 4c: Display the list of students
+        //  Exercise 1: Task 4c: Display the list of students
         private void GotoStudentsPage()
         {
             studentProfile.Visibility = Visibility.Collapsed;
@@ -49,7 +49,7 @@ namespace GradesPrototype
 
         }
 
-        // TODO: Exercise 1: Task 4b: Display the details for a single student
+        //  Exercise 1: Task 4b: Display the details for a single student
         public void GotoStudentProfile()
         {
             studentProfile.Visibility = Visibility.Visible;
@@ -89,7 +89,13 @@ namespace GradesPrototype
         // Set the global context to the name of the student and call the GotoStudentProfile method to display the details of the student
         private void studentsPage_StudentSelected(object sender, StudentEventArgs e)
         {
+            var itemClicked = sender as Button;
 
+            if(itemClicked != null)
+            {
+                string studentName = (string)itemClicked.Tag;
+                if(StudentSelected != null) { }
+            }
         }
         #endregion
 
