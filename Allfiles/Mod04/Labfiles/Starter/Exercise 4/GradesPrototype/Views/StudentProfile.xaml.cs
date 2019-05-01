@@ -50,16 +50,75 @@ namespace GradesPrototype.Views
             }
         }
 
-        // TODO: Exercise 4: Task 4a: Enable a teacher to remove a student from a class
+        // Exercise 4: Task 4a: Enable a teacher to remove a student from a class
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
+            // If the user is not a teacher, do nothing (the button should not appear anyway)
+            if (SessionContext.UserRole != Role.Teacher)
+            {
+                return;
+            }
 
+            try
+            {
+                // If the user is a teacher, ask the user to confirm that this student should be removed from their class
+                string message = String.Format("Remove {0} {1}", SessionContext.CurrentStudent.FirstName, SessionContext.CurrentStudent.LastName);
+                MessageBoxResult reply = MessageBox.Show(message, "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                // If the user confirms, then call the RemoveFromClass method of the current teacher to remove this student from their class
+                if (reply == MessageBoxResult.Yes)
+                {
+                    SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
+
+                    // Go back to the previous page – the student is no longer a member of the class for the current teacher
+                    Back?.Invoke(sender, e);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error removing student from class", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // TODO: Exercise 4: Task 5a: Enable a teacher to add a grade to a student
         private void AddGrade_Click(object sender, RoutedEventArgs e)
         {
+            // If the user is not a teacher, do nothing (the button should not appear anyway)
+            if (SessionContext.UserRole != Role.Teacher)
+            {
+                return;
+            }
 
+            try
+            {
+                // Use the GradeDialog to get the details of the assessment grade
+                GradeDialog gd = new GradeDialog();
+
+                // Display the form and get the details of the new grade
+                if (gd.ShowDialog().Value)
+                {
+                    // When the user closes the form, retrieve the details of the assessment    grade from the form
+                    // and use them to create a new Grade object
+                    Grade newGrade = new Grade();
+                    newGrade.AssessmentDate = gd.assessmentDate.SelectedDate.Value.ToString("d");
+                    newGrade.SubjectName = gd.subject.SelectedValue.ToString();
+                    newGrade.Assessment = gd.assessmentGrade.Text;
+                    newGrade.Comments = gd.comments.Text;
+
+                    // Save the grade to the list of grades
+                    DataSource.Grades.Add(newGrade);
+
+                    // Add the grade to the current student
+                    SessionContext.CurrentStudent.AddGrade(newGrade);
+
+                    // Refresh the display so that the new grade appears
+                    Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error adding assessment grade", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         #endregion
 

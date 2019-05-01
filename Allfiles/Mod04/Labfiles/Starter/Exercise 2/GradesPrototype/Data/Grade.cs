@@ -14,19 +14,85 @@ namespace GradesPrototype.Data
 
     public class Grade
     {
+        private string _assessmentDate;
+        private string _subjectName;
+
         public int StudentID { get; set; }
 
-        // TODO: Exercise 2: Task 2a: Add validation to the AssessmentDate property
-        public string AssessmentDate { get; set; }
-        
-        // TODO: Exercise 2: Task 2b: Add validation to the SubjectName property
-        public string SubjectName { get; set; }
+        // Exercise 2: Task 2a: Add validation to the AssessmentDate property
+        public string AssessmentDate
+        {
+            get => _assessmentDate;
+            set
+            {
+                // Verify that the user has provided a valid date
+                if (DateTime.TryParse(value, out DateTime assessmentDate))
+                {
+                    // Check that the date is no later than the current date
+                    if (assessmentDate > DateTime.Now)
+                    {
+                        // Throw an ArgumentOutOfRangeException if the date is after the current date
+                        throw new ArgumentOutOfRangeException("AssessmentDate", "Assessment date must be on or before the current date");
+                    }
 
-        // TODO: Exercise 2: Task 2c: Add validation to the Assessment property
-        public string Assessment { get; set; }
+                    // If the date is valid, then save it in the appropriate format
+                    _assessmentDate = assessmentDate.ToString("d");
+                }
+                else
+                {
+                    // If the date is not in a valid format then throw an ArgumentException
+                    throw new ArgumentException("AssessmentDate", "Assessment date is not recognized");
+                }
+            }
+        }
+
+        // Exercise 2: Task 2b: Add validation to the SubjectName property
+        public string SubjectName
+        {
+            get => _subjectName;
+            set
+            {
+                if (DataSource.Subjects.Contains(value))
+                {
+                    _subjectName = value;
+                }
+                else
+                {
+                    throw new ArgumentException("SubjectName", "Subject is not recognized");
+                }
+            }
+        }
+
+        // Exercise 2: Task 2c: Add validation to the Assessment property
+        private string _assessment;
+
+        public string Assessment
+        {
+            get
+            {
+                return _assessment;
+            }
+
+            set
+            {
+                // Verify that the grade is in the range A+ to E-
+                // Use a regular expression: a single character in the range A-E at the start of the string followed by an optional + or – at the end of the string
+                Match matchGrade = Regex.Match(value, @"[A-E][+-]?$");
+
+                if (matchGrade.Success)
+                {
+                    _assessment = value;
+                }
+                else
+                {
+                    // If the grade is not valid then throw an ArgumentOutOfRangeException
+                    throw new ArgumentOutOfRangeException("Assessment", "Assessment grade must be in the range of A+ to E-");
+                }
+            }
+        }
 
         public string Comments { get; set; }
-                
+
         // Constructor to initialize the properties of a new Grade
         public Grade(int studentID, string assessmentDate, string subject, string assessment, string comments)
         {
@@ -54,18 +120,19 @@ namespace GradesPrototype.Data
         public string UserName { get; set; }
 
         private string _password = Guid.NewGuid().ToString(); // Generate a random password by default
-        public string Password { 
-            set 
-            { 
-                _password = value; 
-            } 
+        public string Password
+        {
+            set
+            {
+                _password = value;
+            }
         }
 
         public bool VerifyPassword(string pass)
         {
             return (String.Compare(pass, _password) == 0);
         }
-        
+
         public int TeacherID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

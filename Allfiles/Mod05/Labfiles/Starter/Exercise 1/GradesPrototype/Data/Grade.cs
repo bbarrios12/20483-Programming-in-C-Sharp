@@ -10,10 +10,22 @@ namespace GradesPrototype.Data
     // Types of user
     public enum Role { Teacher, Student };
 
-    // TODO: Exercise 1: Task 1a: Create the User abstract class with the common functionality for Teachers and Students
-    // TODO: Exercise 1: Task 1b: Add the UserName property to the User class
-    // TODO: Exercise 1: Task 1c: Add the Password property to the User class
-    // TODO: Exercise 1: Task 1d: Add the VerifyPassword method to the User class
+    // Exercise 1: Task 1a: Create the User abstract class with the common functionality for Teachers and Students
+    public abstract class User
+    {
+        public string UserName { get; set; }
+        private string _password = Guid.NewGuid().ToString();
+
+        public string Password
+        {
+            set { _password = value; }
+        }
+
+        public bool VerifyPassword(string pass)
+        {
+            return (String.Compare(pass, _password) == 0);
+        }
+    }
 
     public class Grade
     {
@@ -124,29 +136,10 @@ namespace GradesPrototype.Data
         }
     }
 
-    // TODO: Exercise 1: Task 2a: Inherit from the User class
-    public class Student: IComparable<Student>
+    // Exercise 1: Task 2a: Inherit from the User class
+    public class Student: User, IComparable<Student>
     {
         public int StudentID { get; set; }
-
-        // TODO: Exercise 1: Task 2b: Remove the UserName property (now inherited from User)
-        public string UserName { get; set; }
-
-        // TODO: Exercise 1: Task 2c: Remove the Password property (now inherited from User)
-        private string _password = Guid.NewGuid().ToString(); // Generate a random password by default
-        public string Password
-        {
-            set
-            {
-                _password = value;
-            }
-        }
-
-        // TODO: Exercise 1: Task 2d: Remove the VerifyPassword method (now inherited from User)
-        public bool VerifyPassword(string pass)
-        {
-            return (String.Compare(pass, _password) == 0);
-        }
 
         public int TeacherID { get; set; }
         public string FirstName { get; set; }
@@ -204,29 +197,10 @@ namespace GradesPrototype.Data
         }
     }
 
-    // TODO: Exercise 1: Task 2e: Inherit from the User class
-    public class Teacher
+    //Exercise 1: Task 2e: Inherit from the User class
+    public class Teacher : User
     {
         public int TeacherID { get; set; }
-
-        // TODO: Exercise 1: Task 2f: Remove the UserName property (now inherited from User)
-        public string UserName { get; set; }
-
-        // TODO: Exercise 1: Task 2g: Remove the Password property (now inherited from User)
-        private string _password = Guid.NewGuid().ToString(); // Generate a random password by default
-        public string Password
-        {
-            set
-            {
-                _password = value;
-            }
-        }
-
-        // TODO: Exercise 1: Task 2h: Remove the VerifyPassword method (now inherited from User)
-        public bool VerifyPassword(string pass)
-        {
-            return (String.Compare(pass, _password) == 0);
-        }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }

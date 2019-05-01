@@ -29,15 +29,41 @@ namespace GradesPrototype.Controls
         // If the user clicks OK to change the password, validate the information that the user has provided
         private void ok_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Exercise 2: Task 4a: Get the details of the current user
+            // Exercise 2: Task 4a: Get the details of the current user
+            User currentUser;
 
-            // TODO: Exercise 2: Task 4b: Check that the old password is correct for the current user
+            if (SessionContext.UserRole == Role.Teacher)
+            {
+                currentUser = SessionContext.CurrentTeacher;
+            }
+            else
+            {
+                currentUser = SessionContext.CurrentStudent;
+            }
+            // Exercise 2: Task 4b: Check that the old password is correct for the current user
+            string oldPwd = oldPassword.Password;
 
-            // TODO: Exercise 2: Task 4c: Check that the new password and confirm password fields are the same
+            if (!currentUser.VerifyPassword(oldPwd))
+            {
+                MessageBox.Show("Old password is incorrect", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            // Exercise 2: Task 4c: Check that the new password and confirm password fields are the same
+            string newPwd = newPassword.Password;
+            string confirmPwd = confirm.Password;
 
-            // TODO: Exercise 2: Task 4d: Attempt to change the password
-            // If the password is not sufficiently complex, display an error message
-
+            if (String.Compare(newPwd, confirmPwd) != 0)
+            {
+                MessageBox.Show("The new password and confirm password fields are different", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            // Exercise 2: Task 4d: Attempt to change the password
+            if (!currentUser.SetPassword(newPwd))
+            {
+                MessageBox.Show("The new password is not sufficiently complex", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+                // If the password is not sufficiently complex, display an error message
+            }
             // Indicate that the data is valid
             this.DialogResult = true;
         }
