@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradesPrototype", "GradesPrototype\GradesPrototype.csproj", "{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grades.DataModel", "Grades.DataModel\Grades.DataModel.csproj", "{94A52341-E6FC-451E-AA00-DE02593D2353}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A52341-E6FC-451E-AA00-DE02593D2353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A52341-E6FC-451E-AA00-DE02593D2353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A52341-E6FC-451E-AA00-DE02593D2353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A52341-E6FC-451E-AA00-DE02593D2353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18805C8A-2ED9-4D3D-996E-12C7930D16C4}
 	EndGlobalSection
 EndGlobal

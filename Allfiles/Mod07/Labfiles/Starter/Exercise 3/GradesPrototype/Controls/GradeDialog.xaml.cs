@@ -45,14 +45,14 @@ namespace GradesPrototype.Controls
             // Create a Grade object and use it to trap and report any data validation exceptions that are thrown
             try
             {
-                // TODO: Exercise 3: Task 2a: Create a Grade object.
-
+                // Exercise 3: Task 2a: Create a Grade object.
+                Grades.DataModel.Grade testGrade = new Grades.DataModel.Grade();
 
                 // TODO: Exercise 3: Task 2b: Call the ValidateAssessmentDate method.
-
+                testGrade.ValidateAssessmentDate(assessmentDate.SelectedDate.Value);
 
                 // TODO: Exercise 3: Task 2c: Call the ValidateAssessmentGrade method.
-
+                testGrade.ValidateAssessmentGrade(assessmentGrade.Text);
             }
             catch (Exception ex)
             {
