@@ -33,34 +33,33 @@ namespace Grades.WPF.Services
         #endregion
 
         #region Teacher
-        // TODO: Exercise 1: Task 2a: Convert GetTeacher into an async method that returns a Task<Teacher>
-        public Teacher GetTeacher(string userName)
+        // Exercise 1: Task 2a: Convert GetTeacher into an async method that returns a Task<Teacher>
+        public async Task<Teacher> GetTeacher(string userName)
         {
             if (!IsConnected())
                 return null;
-            
-            // TODO: Exercise 1: Task 2b: Perform the LINQ query to fetch Teacher information asynchronously
-            var teacher = (from t in DBContext.Teachers
-                           where t.User.UserName == userName
-                           select t).FirstOrDefault();
 
-            return teacher;
+            // Exercise 1: Task 2b: Perform the LINQ query to fetch Teacher information asynchronously
+            return await Task.Run(() =>
+                (from t in DBContext.Teachers
+                 where t.User.UserName == userName
+                 select t).FirstOrDefault());
         }
 
-        // TODO: Exercise 1: Task 3e: Convert GetStudentsByTeacher into an async method that invokes a callback
-        public List<Student> GetStudentsByTeacher(string teacherName)
+        //  Exercise 1: Task 3e: Convert GetStudentsByTeacher into an async method that invokes a callback
+        public async Task GetStudentsByTeacher(string teacherName, Action<IEnumerable<Student>> callback)
         {
             if (!IsConnected())
-                return null;
+                return;
 
             // Fetch students by using the GradesService service
-            // TODO: Exercise 1: Task 3f: Perform the LINQ query to fetch Student data asynchronously
-            var students = (from s in DBContext.Students
+            // Exercise 1: Task 3f: Perform the LINQ query to fetch Student data asynchronously
+            var students = await Task.Run(() => (from s in DBContext.Students
                             where s.Teacher.User.UserName == teacherName
-                            select s).OrderBy(s => s.LastName).ToList();
+                            select s).OrderBy(s => s.LastName).ToList());
 
-            // TODO: Exercise 1: Task 3g: Run the callback by using a new task rather than returning a list of students
-            return students;
+            // Exercise 1: Task 3g: Run the callback by using a new task rather than returning a list of students
+            await Task.Run(() => callback(students));
         }
 
         public void AddStudent(Teacher teacher, Student student)
@@ -129,7 +128,7 @@ namespace Grades.WPF.Services
                             select s).OrderBy(s => s.LastName).ToList();
 
             return students;
-        }            
+        }
 
         public Student GetStudent(string userName)
         {

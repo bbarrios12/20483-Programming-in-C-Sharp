@@ -66,8 +66,8 @@ namespace GradesPrototype.Controls
                 MessageBox.Show("The new password is not sufficiently complex", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            // TODO: Exercise 2: Task 3c: Specify that the current user has been changed
-
+            // Exercise 2: Task 3c: Specify that the current user has been changed
+            SessionContext.DBContext.UpdateObject(currentUser);
             SessionContext.Save();
 
             // Indicate that the data is valid

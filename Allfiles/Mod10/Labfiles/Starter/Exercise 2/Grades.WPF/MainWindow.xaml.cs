@@ -22,9 +22,16 @@ namespace Grades.WPF
 
         #region Events
 
-        // TODO: Exercise 2: Task 2a: Implement the StartBusy event handler
-
-        // TODO: Exercise 2: Task 2b: Implement the EndBusy event handler
+        // Exercise 2: Task 2a: Implement the StartBusy event handler
+        private void StartBusy(object sender, EventArgs e)
+        {
+            busyIndicator.Visibility = Visibility.Visible;
+        }
+        // Exercise 2: Task 2b: Implement the EndBusy event handler
+        private void EndBusy(object sender, EventArgs e)
+        {
+            busyIndicator.Visibility = Visibility.Hidden;
+        }
 
         private void logonPage_LogonSuccess(object sender, EventArgs e)
         {

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using GradesPrototype.Services;
 using GradesPrototype.Controls;
 using Grades.DataModel;
+using System.Globalization;
 
 namespace GradesPrototype.Views
 {
@@ -150,4 +151,26 @@ namespace GradesPrototype.Views
 
     // TODO: Exercise 3: Task 1: Create the ImageNameConverter value converter to convert the image name of a student photograph into the URL of the image on the Web server
     // Converter class for transforming an image name for a photograph into a URL
+    public class ImageNameConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            const string webFolder = "http://localhost:1650/Images/Portraits/";
+            string fileName = value as string;
+
+            if (fileName != null)
+            {
+                return string.Format("{0}{1}", webFolder, fileName);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

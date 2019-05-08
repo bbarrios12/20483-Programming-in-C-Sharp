@@ -27,15 +27,22 @@ namespace Grades.WPF
         #endregion
 
         #region Refresh
-        // TODO: Exercise 1: Task 3a: Mark StudentsPage.Refresh as an asynchronous method
-        public void Refresh()
+        //Exercise 1: Task 3a: Mark StudentsPage.Refresh as an asynchronous method
+        public async void Refresh()
         {
             ServiceUtils utils = new ServiceUtils();
 
-            // TODO: Exercise 1: Task 3h: Invoke GetStudentsByTeacher asychronously and pass the OnGetStudentsByTeacherComplete callback as the second argument
-            var students = utils.GetStudentsByTeacher(SessionContext.UserName);
+            // Exercise 1: Task 3h: Invoke GetStudentsByTeacher asychronously and pass the OnGetStudentsByTeacherComplete callback as the second argument
+            await utils.GetStudentsByTeacher(SessionContext.UserName, OnGetStudentsByTeacherComplete);
+ 
+        }
+        #endregion
 
-            // TODO: Exercise 1: Task 3c: Relocate the remaining code in this method to create the OnGetStudentsByTeacherComplete callback (in the Callbacks region)
+        #region Callbacks
+        // Exercise 1: Task 3b: Implement the OnGetStudentsByTeacherComplete callback to display the students for a teacher here
+        private void OnGetStudentsByTeacherComplete(IEnumerable<Student> students)
+        {
+            // Exercise 1: Task 3c: Relocate the remaining code in this method to create the OnGetStudentsByTeacherComplete callback (in the Callbacks region)
             // Iterate through the returned set of students, construct a local student object list
             // and then data bind this to the list item template
             List<LocalStudent> resultData = new List<LocalStudent>();
@@ -50,16 +57,13 @@ namespace Grades.WPF
                 resultData.Add(student);
             }
 
-            // TODO: Exercise 1: Task 3d: Use a Dispatcher object to update the UI
-            list.ItemsSource = resultData;
-            txtClass.Text = String.Format("Class {0}", SessionContext.CurrentTeacher.Class);
- 
+            // Exercise 1: Task 3d: Use a Dispatcher object to update the UI
+            this.Dispatcher.Invoke(() =>
+            {
+                list.ItemsSource = resultData;
+                txtClass.Text = String.Format("Class {0}", SessionContext.CurrentTeacher.Class);
+            });
         }
-        #endregion
-
-        #region Callbacks
-        // TODO: Exercise 1: Task 3b: Implement the OnGetStudentsByTeacherComplete callback to display the students for a teacher here
-
         #endregion
 
         #region Events

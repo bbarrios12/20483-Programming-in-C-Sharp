@@ -9,6 +9,7 @@
     <UserControl.Resources>
         <app:SubjectConverter x:Key="subjectConverter" />
         <!-- TODO: Exercise 3: Task 3a. Add an instance of the ImageNameConverter class as a resource to the view -->
+        <app:ImageNameConverter x:Key="ImageNameConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,6 +31,7 @@
 
             <StackPanel x:Name="studentName" Grid.Row="1" Margin="30" Height="250" Width="235" >
                 <!-- TODO: Exercise 3: Task 3b. Add an Image control to display the photo of the student and bind the Image control to the ImageName property and use the ImageNameConverter to convert the image name into a URL -->
+                <Image Height="150" Source="{Binding ImageName, Converter={StaticResource ImageNameConverter}}" />
                 <TextBlock x:Name="firstName" Text="{Binding FirstName}" FontSize="16" />
                 <TextBlock x:Name="lastName" Text="{Binding LastName}" FontSize="16"  />
             </StackPanel>

@@ -53,28 +53,55 @@ namespace Grades.Utilities
             List<MemberInfo> fieldsAndProperties = new List<MemberInfo>();
             List<FormatField> items = new List<FormatField>();
 
-            // TODO: Exercise 2: Task 1b: Find all the public fields and properties in the dataForReport object
+            // Exercise 2: Task 1b: Find all the public fields and properties in the dataForReport object
+            Type dataForReportType = dataForReport.GetType();
+            fieldsAndProperties.AddRange(dataForReportType.GetFields());
+            fieldsAndProperties.AddRange(dataForReportType.GetProperties());
 
             // TODO: Exercise 2: Task 1c: Iterate through all public fields and properties, and process each item that is tagged with the IncludeInReport attribute
-
-            // TODO: Exercise 2: Task 1d: Determine whether the current member is tagged with the IncludeInReport attribute
-
-            // TODO: Exercise 2: Task 1e: If the member is tagged with the IncludeInReport attribute, construct a FormatField item
-            // and populate it with the data and format information specified by the attribute
-
-            // TODO: Exercise 2: Task 1f: Construct a FormatField item with this data
- 
-            // TODO: Exercise 2: Task 1g: Add the FormatField item to the collection to be returned
- 
+            foreach (MemberInfo member in fieldsAndProperties)
+            {
+                // TODO: Exercise 2: Task 1d: Determine whether the current member is tagged with the IncludeInReport attribute
+                object[] attributes = member.GetCustomAttributes(false);
+                IncludeInReportAttribute attributeFound = Array.Find(attributes, a => a.GetType() == typeof(IncludeInReportAttribute)) as IncludeInReportAttribute;
+                // TODO: Exercise 2: Task 1e: If the member is tagged with the IncludeInReport attribute, construct a FormatField item
+                // and populate it with the data and format information specified by the attribute
+                if (attributeFound != null)
+                {
+                    // Find the value of the item tagged with the IncludeInReport attribute
+                    string itemValue;
+                    if (member is FieldInfo)
+                    {
+                        itemValue = (member as FieldInfo).GetValue(dataForReport).ToString();
+                    }
+                    else
+                    {
+                        itemValue = (member as PropertyInfo).GetValue(dataForReport).ToString();
+                    }
+                    // TODO: Exercise 2: Task 1f: Construct a FormatField item with this data
+                    FormatField item = new FormatField()
+                    {
+                        Value = itemValue,
+                        Label = attributeFound.Label,
+                        IsBold = attributeFound.Bold,
+                        IsUnderlined = attributeFound.Underline
+                    };
+                    // TODO: Exercise 2: Task 1g: Add the FormatField item to the collection to be returned
+                    items.Add(item);
+                }
+            }
             // Return the list of FormatField items
             return items;
         }
     }
 
 
-    // TODO: Exercise 2: Task 1a: Define a struct that specifies the formatting to apply to an item
+    // Exercise 2: Task 1a: Define a struct that specifies the formatting to apply to an item
     public struct FormatField
     {
-
+        public string Value;
+        public string Label;
+        public bool IsBold;
+        public bool IsUnderlined;
     }
 }

@@ -528,9 +528,15 @@ namespace Grades.WPF
                 foreach (var grade in SessionContext.CurrentGrades)
                 {
                     // TODO: Exercise 2: Task 2a: Use the IncludeProcessor to determine which fields in the Grade object are tagged
+                    List<FormatField> itemsToReport = IncludeProcessor.GetItemsToInclude(grade);
 
                     // TODO: Exercise 2: Task 2b: Output each tagged item, using the format specified by the properties of the IncludeInReport attribute for each item
+                    foreach (FormatField item in itemsToReport)
+                    {
+                        wrapper.AppendText(item.Label == string.Empty ? item.Value : item.Label + ": " + item.Value, item.IsBold, item.IsUnderlined);
 
+                        wrapper.InsertCarriageReturn();
+                    }
                     wrapper.InsertCarriageReturn();
                 }
 

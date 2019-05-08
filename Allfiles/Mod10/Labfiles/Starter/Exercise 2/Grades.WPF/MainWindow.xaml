@@ -44,7 +44,7 @@
                     <y:LogonPage x:Name="logonPage" LogonSuccess="logonPage_LogonSuccess" Visibility="Collapsed" />
                     
                     <!-- TODO: Exercise 2: Task 3e: Wire up the StartBusy and EndBusy event handlers for the StudentsPage view -->
-                    <y:StudentsPage x:Name="studentsPage" StudentSelected="studentsPage_StudentSelected" Visibility="Collapsed" />
+                    <y:StudentsPage x:Name="studentsPage" StartBusy="StartBusy" EndBusy="EndBusy" StudentSelected="studentsPage_StudentSelected" Visibility="Collapsed" />
                     <y:StudentProfile x:Name="studentProfile" Back="studentProfile_Back" Visibility="Collapsed" />
                     <!-- CONTENT -->
                 </Grid>
@@ -67,5 +67,8 @@
         </Grid>
         
         <!-- TODO: Exercise 2: Task 1b: Add the BusyIndicator control to MainWindow -->
+        <y:BusyIndicator x:Name="busyIndicator"
+                 Margin="0"
+                 Visibility="Collapsed" />
     </Grid>
 </Window>

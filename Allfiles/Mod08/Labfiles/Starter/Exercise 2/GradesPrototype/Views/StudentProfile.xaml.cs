@@ -74,8 +74,8 @@ namespace GradesPrototype.Views
                 {
                     SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
 
-                    // TODO: Exercise 2: Task 3b: Specify that the current student has been changed
-
+                    // Exercise 2: Task 3b: Specify that the current student has been changed
+                    SessionContext.DBContext.UpdateObject(SessionContext.CurrentStudent);
                     SessionContext.Save();
 
                     // Go back to the previous page - the student is no longer a member of the class for the current teacher
@@ -120,8 +120,8 @@ namespace GradesPrototype.Views
                     newGrade.StudentUserId = SessionContext.CurrentStudent.UserId;
                     
                     // Save the grade.
-                    // TODO: Exercise 2: Task 2g: Use the AddToGrades method to add a new grade
-                    SessionContext.DBContext.Grades.Add(newGrade);
+                    // Exercise 2: Task 2g: Use the AddToGrades method to add a new grade
+                    SessionContext.DBContext.AddToGrades(newGrade);
                     SessionContext.Save();
 
                     // Refresh the display so that the new grade appears
@@ -154,8 +154,8 @@ namespace GradesPrototype.Views
                 if (result.HasValue && result.Value)
                 {
                     // Get the grades for the currently selected student
-                    // TODO: Exercise 2: Task 2h: Load Subject data with Grades
-                    IEnumerable<Grades.DataModel.Grade> grades = (from g in SessionContext.DBContext.Grades
+                    // Exercise 2: Task 2h: Load Subject data with Grades
+                    IEnumerable<Grades.DataModel.Grade> grades = (from g in SessionContext.DBContext.Grades.Expand("Subject")
                                                                   where g.StudentUserId == SessionContext.CurrentStudent.UserId
                                                                   select g);
 

@@ -33,8 +33,8 @@ namespace GradesPrototype.Controls
             // Find all unassigned students - they have a TeacherID of zero
             SessionContext.DBContext.Students.Load();
 
-            // TODO: Exercise 2: Task 2f: Reference the SessionContext.DBContext.Students collection
-            var unassignedStudents = from s in SessionContext.DBContext.Students.Local  
+            // Exercise 2: Task 2f: Reference the SessionContext.DBContext.Students collection
+            var unassignedStudents = from s in SessionContext.DBContext.Students.Expand("User, Grades")
                                      where s.TeacherUserId == null
                                      select s;
             
@@ -91,9 +91,9 @@ namespace GradesPrototype.Controls
                     Guid teacherID = SessionContext.CurrentTeacher.UserId ;
 
                     SessionContext.CurrentTeacher.EnrollInClass(student);
-                    
-                    // TODO: Exercise 2: Task 3a: Specify that the selected student has been changed
 
+                    // Exercise 2: Task 3a: Specify that the selected student has been changed
+                    SessionContext.DBContext.UpdateObject(student);
                     SessionContext.Save();
 
                     // Refresh the display - the newly assigned student should disappear from the list of unassigned students

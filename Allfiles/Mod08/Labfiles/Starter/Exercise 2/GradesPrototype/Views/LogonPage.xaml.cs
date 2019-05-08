@@ -39,8 +39,8 @@ namespace GradesPrototype.Views
         private void Logon_Click(object sender, RoutedEventArgs e)
         {
             // Find the user in the list of possible users - first check whether the user is a Teacher
-            // TODO: Exercise 2: Task 2c: Load User and Students data with Teachers
-            var teacher = (from Grades.DataModel.Teacher t in SessionContext.DBContext.Teachers
+            // Exercise 2: Task 2c: Load User and Students data with Teachers
+            var teacher = (from Grades.DataModel.Teacher t in SessionContext.DBContext.Teachers.Expand("User, Students")
                            where t.User.UserName == username.Text && t.User.UserPassword == password.Password
                            select t).FirstOrDefault();
 
@@ -60,8 +60,8 @@ namespace GradesPrototype.Views
             // If the user is not a teacher, check whether the username and password match those of a student
             else
             {
-                // TODO: Exercise 2: Task 2d: Load User and Grades data with Students
-                var student = (from Grades.DataModel.Student s in SessionContext.DBContext.Students
+                // Exercise 2: Task 2d: Load User and Grades data with Students
+                var student = (from Grades.DataModel.Student s in SessionContext.DBContext.Students.Expand("User, Grades")
                                where s.User.UserName == username.Text && s.User.UserPassword == password.Password 
                                select s).FirstOrDefault();
 
